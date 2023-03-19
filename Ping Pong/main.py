@@ -8,7 +8,7 @@ win.fill((255, 255, 255))
 c = (0, 0, 0)
 speed_x = 1
 speed_y = random.randint(-1, 1)
-
+print(f'speed_x: {speed_x}, speed_y: {speed_y}')
 # help(pg.Rect)
 
 class Toy(pg.sprite.Sprite):
@@ -21,7 +21,7 @@ class Toy(pg.sprite.Sprite):
         self.rect = pg.Rect(self.x, self.y, self.w, self.h)
 
     def move(self, x, y, w, h):
-        print(f'x: {x}, y: {y}, w: {w}, h: {h}')
+        print(f'In move x: {x}, y: {y}, w: {w}, h: {h}')
         if x > 1000 or x < 0:
             x = 1000
         if y > 1000 or y < 0:
@@ -46,10 +46,15 @@ ball = Toy(450, 300, 100, 100)
 ball.move(450 + speed_x, 350 + speed_y, 100, 100)
 playing = True
 
+cnt = 0
 while playing:
+    cnt += 1
+    print(f'\ncnt: {cnt}')
+    if cnt == 30:
+        break
     win.fill((255, 255, 255))
-    print(f"{player2.x}, {player2.y}")
-    print(f"{ball.x}, {ball.y}")
+    print(f"player2.x: {player2.x}, player2.y: {player2.y}")
+    print(f"ball.x: {ball.x}, ball.y: {ball.y}")
     for e in pg.event.get():
         if e.type == pg.QUIT:
             playing = False
@@ -96,12 +101,13 @@ while playing:
     pg.draw.rect(win, c, player_rect)
     pg.draw.rect(win, c, player2_rect)
     pg.draw.ellipse(win, c, ball_rect)
+
+    print(f'cnt: {cnt} -- speed_x: {speed_x}, speed_y: {speed_y}')
+    print(f'cnt: {cnt} -- 450 + speed_x: {450 + speed_x}, 350 + speed_y: {350 + speed_y}')
     ball.move(450 + speed_x, 350 + speed_y, 100, 100)
     print(ball_rect.x)
-    # ball_rect.x += speed_x
-    ball_rect.x += 1
-    #ball_rect.y += speed_y
-    ball_rect.y += 1
+    ball_rect.x += speed_x
+    ball_rect.y += speed_y
     speed_x += speed_x
     speed_y += speed_y
     pg.display.flip()
